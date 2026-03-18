@@ -1,0 +1,28 @@
+╔══════════════════════════════════════════════════╗
+║          FAMILIADA – KARTKA OPERATORA            ║
+╠══════════════════════════════════════════════════╣
+║                                                  ║
+║  ODPOWIEDZI                                      ║
+║  1 – 8  /  NUM1 – NUM8  →  odkryj odpowiedź     ║
+║                                                  ║
+║  BŁĘDY                                           ║
+║  X              →  dodaj krzyżyk  (max 3)        ║
+║  Z              →  usuń ostatni krzyżyk          ║
+║                                                  ║
+║  DRUŻYNY                                         ║
+║  TAB            →  zmień aktywną drużynę         ║
+║  ENTER          →  przyznaj punkty drużynie      ║
+║                                                  ║
+║  NAWIGACJA                                       ║
+║  →              →  następne pytanie              ║
+║  ←              →  poprzednie pytanie            ║
+║  R              →  reset bieżącej rundy          ║
+║                                                  ║
+║  INNE                                            ║
+║  F              →  pełny ekran / okno            ║
+║  ESC            →  wyjście                       ║
+║                                                  ║
+╠══════════════════════════════════════════════════╣
+║  Uruchomienie:                                   ║
+║  python familiada.py pytania.json                ║
+╚══════════════════════════════════════════════════╝

@@ -1,0 +1,271 @@
+{
+    "title": "Familiada - zestaw pytań: Dzień Wiosny",
+    "theme": "dzień wiosny",
+    "grade_level": "Klasy 7-8 (SP)",
+    "notes": "Pytania zaprojektowane w stylu Familiady: każde pytanie zawiera listę odpowiedzi z punktacją (symulowane wyniki ankiety). Pola 'suitable_round' sugerują, do której rundy najbardziej pasuje (R1: x1, R2: x2, R3: x3).",
+    "questions": [
+        {
+            "id": 1,
+            "prompt": "Co ludzie najczęściej robią w pierwszy dzień wiosny?",
+            "suitable_round": "R1",
+            "answers": [
+                {
+                    "text": "Spacer",
+                    "points": 35
+                },
+                {
+                    "text": "Piknik/odpoczynek na łące",
+                    "points": 20
+                },
+                {
+                    "text": "Sadzenie kwiatów/roślin",
+                    "points": 15
+                },
+                {
+                    "text": "Sprzątanie ogródka/domowe porządki",
+                    "points": 10
+                },
+                {
+                    "text": "Bieganie/jogging",
+                    "points": 8
+                },
+                {
+                    "text": "Robienie zdjęć/przyroda",
+                    "points": 12
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "prompt": "Jakie kwiaty kojarzą się najbardziej z wiosną?",
+            "suitable_round": "R1",
+            "answers": [
+                {
+                    "text": "Tulipany",
+                    "points": 30
+                },
+                {
+                    "text": "Żonkile (żółte narcyzy)",
+                    "points": 25
+                },
+                {
+                    "text": "Krokusy",
+                    "points": 15
+                },
+                {
+                    "text": "Hiacynty",
+                    "points": 12
+                },
+                {
+                    "text": "Fiołki",
+                    "points": 10
+                },
+                {
+                    "text": "Magnolie",
+                    "points": 8
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "prompt": "Co Polacy robią najczęściej w wiosenny weekend?",
+            "suitable_round": "R1",
+            "answers": [
+                {
+                    "text": "Wycieczka za miasto/na łono natury",
+                    "points": 30
+                },
+                {
+                    "text": "Grill/spotkanie przy jedzeniu",
+                    "points": 25
+                },
+                {
+                    "text": "Jazda na rowerze",
+                    "points": 20
+                },
+                {
+                    "text": "Porządki/ogrodnictwo",
+                    "points": 10
+                },
+                {
+                    "text": "Zakupy/odwiedziny",
+                    "points": 8
+                },
+                {
+                    "text": "Spotkania z rodziną",
+                    "points": 7
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "prompt": "Jakie ptaki najczęściej wracają lub są widoczne wiosną w Polsce?",
+            "suitable_round": "R2",
+            "answers": [
+                {
+                    "text": "Jaskółki",
+                    "points": 35
+                },
+                {
+                    "text": "Bociany",
+                    "points": 30
+                },
+                {
+                    "text": "Skowronki",
+                    "points": 15
+                },
+                {
+                    "text": "Wróble",
+                    "points": 12
+                },
+                {
+                    "text": "Żurawie",
+                    "points": 8
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "prompt": "Jakie owoce zaczynają pojawiać się na bazarach/rynku wiosną?",
+            "suitable_round": "R3",
+            "answers": [
+                {
+                    "text": "Truskawki",
+                    "points": 50
+                },
+                {
+                    "text": "Rabarbar",
+                    "points": 30
+                },
+                {
+                    "text": "Poziomki",
+                    "points": 20
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "prompt": "Jakie kolory ludzie najczęściej kojarzą z wiosną?",
+            "suitable_round": "any",
+            "answers": [
+                {
+                    "text": "Zielony",
+                    "points": 35
+                },
+                {
+                    "text": "Żółty",
+                    "points": 25
+                },
+                {
+                    "text": "Różowy",
+                    "points": 15
+                },
+                {
+                    "text": "Biały",
+                    "points": 10
+                },
+                {
+                    "text": "Niebieski",
+                    "points": 8
+                },
+                {
+                    "text": "Fioletowy",
+                    "points": 7
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "prompt": "Co warto zabrać na wiosenny piknik?",
+            "suitable_round": "any",
+            "answers": [
+                {
+                    "text": "Koc",
+                    "points": 30
+                },
+                {
+                    "text": "Jedzenie/kanapki",
+                    "points": 25
+                },
+                {
+                    "text": "Napoje",
+                    "points": 20
+                },
+                {
+                    "text": "Kosz/pojemniki",
+                    "points": 10
+                },
+                {
+                    "text": "Serwetki/talerze",
+                    "points": 8
+                },
+                {
+                    "text": "Gra/piłka do zabawy",
+                    "points": 7
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "prompt": "Jakie aktywności sportowe najczęściej uprawia się wiosną na świeżym powietrzu?",
+            "suitable_round": "any",
+            "answers": [
+                {
+                    "text": "Bieganie (jogging)",
+                    "points": 30
+                },
+                {
+                    "text": "Jazda na rowerze",
+                    "points": 25
+                },
+                {
+                    "text": "Nordic walking",
+                    "points": 15
+                },
+                {
+                    "text": "Piłka nożna/amatorskie mecze",
+                    "points": 12
+                },
+                {
+                    "text": "Rolki/łyżworolki",
+                    "points": 10
+                },
+                {
+                    "text": "Joga/ćwiczenia na trawie",
+                    "points": 8
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "prompt": "Jakie warzywa często wysiewa/sadzi się w ogródku wiosną?",
+            "suitable_round": "any",
+            "answers": [
+                {
+                    "text": "Marchew",
+                    "points": 25
+                },
+                {
+                    "text": "Sałata",
+                    "points": 20
+                },
+                {
+                    "text": "Rzodkiewka",
+                    "points": 18
+                },
+                {
+                    "text": "Cebula/szczypiorek",
+                    "points": 15
+                },
+                {
+                    "text": "Groszek cukrowy",
+                    "points": 12
+                },
+                {
+                    "text": "Koper",
+                    "points": 10
+                }
+            ]
+        }
+    ]
+}
