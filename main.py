@@ -19,13 +19,16 @@ class Game:
         self.files: pathlib.Path = files_dir
 
         # Pygame stuff
-        self.screen: pg.Surface = pg.display.set_mode((1920, 1080), pg.FULLSCREEN | pg.SCALED)
+        self.screen: pg.Surface = pg.display.set_mode(
+            (1920, 1080), pg.FULLSCREEN | pg.SCALED
+        )
         self.keys: pg.key.ScancodeWrapper = pg.key.get_just_pressed()
         self.clock = pg.Clock()
         self.mouse: tuple[bool, bool, bool, bool, bool] = pg.mouse.get_just_pressed()
         self.mouse_pos: tuple[int, int] = pg.mouse.get_pos()
         self.font = pg.font.Font(self.files / "fonts" / "familiada.ttf", size=30)
         self.Xfont = pg.font.Font(self.files / "fonts" / "familiada.ttf", size=200)
+        self.asciifont= pg.font.Font(self.files / "fonts" / "JetBrainsMonoNerdFont-Regular.ttf", size = 14)
 
         self.running: bool = True
         self.state: str = "choose"
@@ -38,6 +41,25 @@ class Game:
         self.team: Literal[0] | Literal[1] = 0
 
         self.points: int = 0
+
+        self.intro = self.load_anim(self.files / "output.gif", 3)
+        self.current_delay = 0
+        self.current_frame = 0
+        self.current_time = 0
+
+        self.ascii_art: str = r"""
+             /$$$$$$$$ /$$$$$$  /$$      /$$ /$$$$$$ /$$       /$$$$$$  /$$$$$$  /$$$$$$$   /$$$$$$       
+            | $$_____//$$__  $$| $$$    /$$$|_  $$_/| $$      |_  $$_/ /$$__  $$| $$__  $$ /$$__  $$      
+            | $$     | $$  \ $$| $$$$  /$$$$  | $$  | $$        | $$  | $$  \ $$| $$  \ $$| $$  \ $$      
+            | $$$$$  | $$$$$$$$| $$ $$/$$ $$  | $$  | $$        | $$  | $$$$$$$$| $$  | $$| $$$$$$$$      
+            | $$__/  | $$__  $$| $$  $$$| $$  | $$  | $$        | $$  | $$__  $$| $$  | $$| $$__  $$      
+            | $$     | $$  | $$| $$\  $ | $$  | $$  | $$        | $$  | $$  | $$| $$  | $$| $$  | $$      
+            | $$     | $$  | $$| $$ \/  | $$ /$$$$$$| $$$$$$$$ /$$$$$$| $$  | $$| $$$$$$$/| $$  | $$      
+            |__/     |__/  |__/|__/     |__/|______/|________/|______/|__/  |__/|_______/ |__/  |__/      
+        """
+                                                                                              
+                                                                                              
+
 
     def load_presets(self) -> list[dict]:
         presets: list[dict] = []
@@ -81,7 +103,7 @@ class Game:
                 color = "orange"
                 if self.mouse[0]:
                     self.preset = preset
-                    self.state = "normal"
+                    self.state = "intro"
                     self.questions: list[list[bool]] = self.load_preset_info()
 
             text = self.font.render(f"{preset["title"]}", True, color)
@@ -91,13 +113,52 @@ class Game:
                 (rect.center[0] - text.width // 2, rect.center[1] - text.height // 2),
             )
 
+    def load_anim(
+        self, path: pathlib.Path, scale_factor: int
+    ) -> list[tuple[pg.Surface, float]]:
+
+        # Loading the animation as normal
+        animation: list[tuple[pg.Surface, float]] = pg.image.load_animation(path)
+
+        for i, pair in enumerate(animation):
+            # 1. Rip the pair apart
+            frame, delay = pair
+
+            # 2. Convert the frame and resize it
+            frame.convert_alpha() if frame.get_alpha() else frame.convert()
+            if scale_factor != 1:
+                frame = pg.transform.scale_by(frame, scale_factor)
+
+            # 3. Put everything together like nothing happened
+            animation[i] = (frame, delay)
+
+            # 4. Surgery completed successfully
+            return animation
+        return []
+
+    def animate(self, dt: float) -> None:
+        self.current_delay: float = self.intro[self.current_frame][1]
+
+        self.animation_frames: int = len(self.intro)
+
+        self.image = self.intro[self.current_frame][0]
+        self.current_time += dt
+        if self.current_time >= self.current_delay:
+            self.current_time = 0
+            self.current_frame += 1
+            if self.current_frame >= self.animation_frames:
+                self.state = "ascii"
+                self.current_frame -= 1
+            self.image = self.intro[self.current_frame][0]
+        self.screen.blit(self.image)
+
     def events(self) -> None:
         for e in pg.event.get():
             if e.type == pg.QUIT:
                 self.running = False
 
     def update(self) -> None:
-        self.clock.tick(60)
+        self.dt = self.clock.tick(60)
 
         self.keys = pg.key.get_just_pressed()
         self.mouse = pg.mouse.get_just_pressed()
@@ -127,6 +188,16 @@ class Game:
         self.screen.fill("black")
         if self.state == "choose":
             self.choose_preset()
+
+        if self.state == "intro":
+            self.animate(self.dt)
+
+        if self.state == "ascii":
+            rtext = self.asciifont.render(self.ascii_art, True, "yellow")
+            self.screen.blit(rtext)
+
+            if self.keys[pg.K_RETURN]:
+                self.state = "normal"
 
         if self.state == "normal":
             size = self.screen.size
