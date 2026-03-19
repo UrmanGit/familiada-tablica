@@ -56,10 +56,10 @@ class Game:
         Number of questions is the length of the list.
         """
         questions: list[list[bool]] = []
-        for question in self.preset:
+        for question in self.preset["questions"]:
             answers: list[bool] = []
-            for answer in question:
-                answers.append(answer)
+            for answer in question["answers"]:
+                answers.append(False)
             questions.append(answers)
         return questions
 
@@ -106,7 +106,7 @@ class Game:
         self.mouse_pos = pg.mouse.get_pos()
 
         if self.state == "normal":
-            for i in range(1, len(self.questions[self.question])):
+            for i in range(1, len(self.questions[self.question]) + 1):
                 if eval(f"self.keys[pg.K_{i}]"):
                     i = i - 1
                     if self.questions[self.question][i] == False:
@@ -115,13 +115,13 @@ class Game:
                             "answers"
                         ][i]["points"]
 
-                if self.keys[pg.K_x]:
-                    if self.team == 1:
-                        self.teams = (self.teams[0], self.teams[1] + 1)
-                else:
-                    self.teams = (self.teams[0] + 1, self.teams[1])
-                if self.keys[pg.K_TAB]:
-                    self.team = 1 if self.team == 0 else 0
+            if self.keys[pg.K_x]:
+                if self.team == 1:
+                    self.teams = (self.teams[0], self.teams[1] + 1)
+            else:
+                self.teams = (self.teams[0] + 1, self.teams[1])
+            if self.keys[pg.K_TAB]:
+                self.team = 1 if self.team == 0 else 0
 
     def draw(self) -> None:
         self.screen.fill("black")
@@ -133,47 +133,50 @@ class Game:
             width = size[0]
             iks_width = width / 12
 
-            # Pionowa linia po lewej
-            pg.draw.line(self.screen, "yellow", (iks_width, 0), (iks_width, size[1]), 3)
-
-            # Poziome linie po lewej
-            for i in range(3):
-                pg.draw.line(
-                    self.screen,
-                    "yellow",
-                    (0, size[1] // 3 * i),
-                    (iks_width, size[1] // 3 * i),
-                    2,
-                )
-
+            if self.team == 1:
             # Pionowa linia po prawej
-            pg.draw.line(
-                self.screen,
-                "yellow",
-                (width - iks_width, 0),
-                (width - iks_width, size[1]),
-                3,
-            )
-
-            # Poziome linie po prawej
-            for i in range(3):
                 pg.draw.line(
                     self.screen,
                     "yellow",
-                    (width - iks_width, size[1] // 3 * i),
-                    (width, size[1] // 3 * i),
-                    2,
+                    (width - iks_width, 0),
+                    (width - iks_width, size[1]),
+                    3,
                 )
+
+                # Poziome linie po prawej
+                for i in range(3):
+                    pg.draw.line(
+                        self.screen,
+                        "yellow",
+                        (width - iks_width, size[1] // 3 * i),
+                        (width, size[1] // 3 * i),
+                        2,
+                    )
+
+            else:
+                # Pionowa linia po lewej
+                pg.draw.line(self.screen, "yellow", (iks_width, 0), (iks_width, size[1]), 3)
+    
+                # Poziome linie po lewej
+                for i in range(3):
+                    pg.draw.line(
+                        self.screen,
+                        "yellow",
+                        (0, size[1] // 3 * i),
+                        (iks_width, size[1] // 3 * i),
+                        2,
+                    )
 
             # Pytania
             for i, answer in enumerate(
                 self.preset["questions"][self.question]["answers"]
             ):
                 question = self.preset["questions"][self.question]
-                text = f"{i + 1}. {answer}"
+                text = f"{i + 1}. {answer["text"].upper()}"
+                text = f"{text.ljust(93, ".")} | {answer["points"]}"
 
                 rtext = self.font.render(
-                    f"{i + 1}. {"." * 100}", True, "yellow", None
+                    f"{i + 1}. {"." * 93} | ??", True, "yellow", None
                 )
                 if self.questions[self.question][i] == True:
                     rtext = self.font.render(text, True, "yellow", None)
