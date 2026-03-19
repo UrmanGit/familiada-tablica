@@ -3,6 +3,7 @@
 import json
 import pathlib
 import sys
+from typing import Literal
 
 import pygame as pg
 
@@ -19,21 +20,26 @@ class Game:
 
         # Pygame stuff
         self.screen: pg.Surface = pg.display.set_mode(
-            (0, 0), pg.FULLSCREEN | pg.DOUBLEBUF, vsync=1
+            (1920, 1080), pg.FULLSCREEN | pg.DOUBLEBUF
         )
         self.keys: pg.key.ScancodeWrapper = pg.key.get_just_pressed()
         self.clock = pg.Clock()
         self.mouse: tuple[bool, bool, bool, bool, bool] = pg.mouse.get_just_pressed()
         self.mouse_pos: tuple[int, int] = pg.mouse.get_pos()
         self.font = pg.font.Font(self.files / "fonts" / "familiada.ttf", size=40)
+        self.Xfont = pg.font.Font(self.files / "fonts" / "familiada.ttf", size=60)
 
-        self.round_info: dict = {}
         self.running: bool = True
         self.state: str = "choose"
-        self.round: str = "R1"
-        self.question_num: int = 0
+        self.round: int = 0
+        self.question: int = 0
 
-        self.presets = self.load_presets()
+        self.presets: list[dict] = self.load_presets()
+
+        self.teams: tuple[int, int] = (0, 0)
+        self.team: Literal[0] | Literal[1] = 0
+
+        self.points: int = 0
 
     def load_presets(self) -> list[dict]:
         presets: list[dict] = []
@@ -43,8 +49,19 @@ class Game:
                 presets.append(preset)
         return presets
 
-    # TODO: Make a `load_preset_info` function that will parse informations such as number of questions per round, and its answers.
-    # TODO: Make some new `self.` variables about current round, question and uncovered questions.
+    def load_preset_info(self) -> list[list[bool]]:
+        """
+        Loads information from current preset.
+        :param questions: It's a list where each entry is the list of bools, where each bool represents if the question is hidden or revealed.
+        Number of questions is the length of the list.
+        """
+        questions: list[list[bool]] = []
+        for question in self.preset:
+            answers: list[bool] = []
+            for answer in question:
+                answers.append(answer)
+            questions.append(answers)
+        return questions
 
     def choose_preset(self) -> None:
         for i, preset in enumerate(self.presets):
@@ -67,6 +84,7 @@ class Game:
                 if self.mouse[0]:
                     self.preset = preset
                     self.state = "normal"
+                    self.questions: list[list[bool]] = self.load_preset_info()
 
             text = self.font.render(f"{preset["title"]}", True, color)
 
@@ -88,7 +106,22 @@ class Game:
         self.mouse_pos = pg.mouse.get_pos()
 
         if self.state == "normal":
-            pass
+            for i in range(1, len(self.questions[self.question])):
+                if eval(f"self.keys[pg.K_{i}]"):
+                    i = i - 1
+                    if self.questions[self.question][i] == False:
+                        self.questions[self.question][i] = True
+                        self.points += self.preset["questions"][self.question][
+                            "answers"
+                        ][i]["points"]
+
+                if self.keys[pg.K_x]:
+                    if self.team == 1:
+                        self.teams = (self.teams[0], self.teams[1] + 1)
+                else:
+                    self.teams = (self.teams[0] + 1, self.teams[1])
+                if self.keys[pg.K_TAB]:
+                    self.team = 1 if self.team == 0 else 0
 
     def draw(self) -> None:
         self.screen.fill("black")
@@ -100,9 +133,61 @@ class Game:
             width = size[0]
             iks_width = width / 12
 
-            answers = []
-            for answer in self.preset["questions"][self.question_num]["answers"]:
-                answers.append(answer)
+            # Pionowa linia po lewej
+            pg.draw.line(self.screen, "yellow", (iks_width, 0), (iks_width, size[1]), 3)
+
+            # Poziome linie po lewej
+            for i in range(3):
+                pg.draw.line(
+                    self.screen,
+                    "yellow",
+                    (0, size[1] // 3 * i),
+                    (iks_width, size[1] // 3 * i),
+                    2,
+                )
+
+            # Pionowa linia po prawej
+            pg.draw.line(
+                self.screen,
+                "yellow",
+                (width - iks_width, 0),
+                (width - iks_width, size[1]),
+                3,
+            )
+
+            # Poziome linie po prawej
+            for i in range(3):
+                pg.draw.line(
+                    self.screen,
+                    "yellow",
+                    (width - iks_width, size[1] // 3 * i),
+                    (width, size[1] // 3 * i),
+                    2,
+                )
+
+            # Pytania
+            for i, answer in enumerate(
+                self.preset["questions"][self.question]["answers"]
+            ):
+                question = self.preset["questions"][self.question]
+                text = f"{i + 1}. {answer}"
+
+                rtext = self.font.render(
+                    f"{i + 1}. {"." * 100}", True, "yellow", None
+                )
+                if self.questions[self.question][i] == True:
+                    rtext = self.font.render(text, True, "yellow", None)
+
+                answers = len(question["answers"])
+
+                integer = size[1] // answers
+                half_integer = (integer - rtext.height) // 2
+
+                # Render text
+                self.screen.blit(
+                    rtext,
+                    (iks_width + 20, (i + 1) * half_integer + i * (rtext.height + half_integer)),
+                )
 
         pg.display.flip()
 

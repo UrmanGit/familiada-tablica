@@ -1,0 +1,104 @@
+{
+    "title": "Familiada — Dzień wiosny (Przedszkole + Klasy 1–3)",
+    "questions": [
+        {
+            "prompt": "Co można robić, gdy przychodzi wiosna?",
+            "answers": [
+                { "text": "Bawić się na polu", "points": 40 },
+                { "text": "Jeździć na rowerze", "points": 20 },
+                { "text": "Zbierać kwiatki", "points": 15 },
+                { "text": "Iść na spacer", "points": 15 },
+                { "text": "Puszczać bańki mydlane", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Jakie zwierzęta kojarzą się z wiosną?",
+            "answers": [
+                { "text": "Bocian", "points": 35 },
+                { "text": "Motyl", "points": 25 },
+                { "text": "Pszczoła", "points": 15 },
+                { "text": "Żaba", "points": 15 },
+                { "text": "Biedronka", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Co rośnie wiosną?",
+            "answers": [
+                { "text": "Kwiaty", "points": 40 },
+                { "text": "Trawa", "points": 25 },
+                { "text": "Liście na drzewach", "points": 20 },
+                { "text": "Warzywa", "points": 15 }
+            ]
+        },
+        {
+            "prompt": "Jakie kwiaty kwitną wiosną?",
+            "answers": [
+                { "text": "Tulipan", "points": 35 },
+                { "text": "Przebiśnieg", "points": 25 },
+                { "text": "Żonkil", "points": 20 },
+                { "text": "Stokrotka", "points": 10 },
+                { "text": "Mlecz", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Jaką pogodę mamy wiosną?",
+            "answers": [
+                { "text": "Słoneczną", "points": 35 },
+                { "text": "Ciepłą", "points": 30 },
+                { "text": "Pada deszcz", "points": 20 },
+                { "text": "Wieje wiatr", "points": 10 },
+                { "text": "Jest mgła", "points": 5 }
+            ]
+        },
+        {
+            "prompt": "Co dzieje się z drzewami na wiosnę?",
+            "answers": [
+                { "text": "Wyrastają liście", "points": 40 },
+                { "text": "Kwitną kwiaty na gałęziach", "points": 30 },
+                { "text": "Pojawiają się pąki", "points": 20 },
+                { "text": "Ptaki budują na nich gniazda", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Co robią ptaki wiosną?",
+            "answers": [
+                { "text": "Wracają z ciepłych krajów", "points": 40 },
+                { "text": "Budują gniazda", "points": 30 },
+                { "text": "Śpiewają", "points": 15 },
+                { "text": "Znoszą jajka", "points": 10 },
+                { "text": "Karmią pisklęta", "points": 5 }
+            ]
+        },
+        {
+            "prompt": "Co kojarzy się z pierwszym dniem wiosny?",
+            "answers": [
+                { "text": "Topienie Marzanny", "points": 40 },
+                { "text": "Słońce", "points": 25 },
+                { "text": "Kwiaty", "points": 15 },
+                { "text": "Zabawa na dworze", "points": 10 },
+                { "text": "Kolorowe ubrania", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Jakie kolory kojarzą się z wiosną?",
+            "answers": [
+                { "text": "Zielony", "points": 35 },
+                { "text": "Żółty", "points": 25 },
+                { "text": "Różowy", "points": 20 },
+                { "text": "Niebieski", "points": 10 },
+                { "text": "Biały", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Co możemy usłyszeć wiosną na polu?",
+            "answers": [
+                { "text": "Śpiew ptaków", "points": 40 },
+                { "text": "Bzyczenie pszczół", "points": 25 },
+                { "text": "Szum wiatru", "points": 15 },
+                { "text": "Kumkanie żab", "points": 15 },
+                { "text": "Szum deszczu", "points": 5 }
+            ]
+        }
+    ]
+}
+

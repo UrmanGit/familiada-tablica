@@ -1,0 +1,102 @@
+{
+    "title": "Familiada — Dzień wiosny (Klasy 4-8)",
+    "questions": [
+        {
+            "prompt": "Jakie zjawiska pogodowe są typowe dla wiosny?",
+            "answers": [
+                { "text": "Deszcz", "points": 30 },
+                { "text": "Słońce", "points": 25 },
+                { "text": "Wiatr", "points": 15 },
+                { "text": "Burze", "points": 15 },
+                { "text": "Tęcza", "points": 15 }
+            ]
+        },
+        {
+            "prompt": "Jakie święta obchodzimy wiosną?",
+            "answers": [
+                { "text": "Wielkanoc", "points": 40 },
+                { "text": "Lany poniedziałek", "points": 25 },
+                { "text": "Prima Aprilis", "points": 20 },
+                { "text": "Majówka", "points": 15 }
+            ]
+        },
+        {
+            "prompt": "Jakie kwiaty kwitną wiosną?",
+            "answers": [
+                { "text": "Tulipany", "points": 30 },
+                { "text": "Krokusy", "points": 25 },
+                { "text": "Żonkile", "points": 20 },
+                { "text": "Magnolie", "points": 15 },
+                { "text": "Hiacynty", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Jakie zmiany zachodzą w przyrodzie na wiosnę?",
+            "answers": [
+                { "text": "Drzewa zaczynają kwitnąć", "points": 30 },
+                { "text": "Dni stają się dłuższe", "points": 25 },
+                { "text": "Zwierzęta budzą się z hibernacji", "points": 20 },
+                { "text": "Ptaki wracają z południa", "points": 15 },
+                { "text": "Rzeki wzbierają po roztopach", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Co to jest równonoc wiosenna?",
+            "answers": [
+                { "text": "Dzień tak samo długi, jak noc", "points": 40 },
+                { "text": "Astronomiczny początek wiosny", "points": 30 },
+                { "text": "Dzień występujący 20–21 marca", "points": 20 },
+                { "text": "Dzień, w którym słońce wschodzi dokładnie na wschodzie", "points": 10 }
+            ]
+        },
+                {
+            "prompt": "Jakie zwierzęta budzą się ze snu zimowego wiosną?",
+            "answers": [
+                { "text": "Niedźwiedź", "points": 35 },
+                { "text": "Jeż", "points": 30 },
+                { "text": "Świstak", "points": 20 },
+                { "text": "Borsuk", "points": 15 }
+            ]
+        },
+        {
+            "prompt": "Co symbolizuje wiosna w kulturze i literaturze?",
+            "answers": [
+                { "text": "Odrodzenie i nowe życie", "points": 35 },
+                { "text": "Miłość", "points": 25 },
+                { "text": "Nadzieję", "points": 20 },
+                { "text": "Wolność", "points": 10 },
+                { "text": "Młodość", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Jakie sporty i aktywności stają się popularne wiosną?",
+            "answers": [
+                { "text": "Jazda na rowerze", "points": 30 },
+                { "text": "Bieganie", "points": 25 },
+                { "text": "Piłka nożna", "points": 20 },
+                { "text": "Rolki i deskorolka", "points": 15 },
+                { "text": "Wędrówki górskie", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Jakie owady pojawiają się wiosną jako pierwsze?",
+            "answers": [
+                { "text": "Pszczoły", "points": 30 },
+                { "text": "Motyle", "points": 25 },
+                { "text": "Biedronki", "points": 20 },
+                { "text": "Mrówki", "points": 15 },
+                { "text": "Komary", "points": 10 }
+            ]
+        },
+        {
+            "prompt": "Jakie warzywa sieje się lub sadzi wiosną?",
+            "answers": [
+                { "text": "Marchewka", "points": 30 },
+                { "text": "Rzodkiewka", "points": 25 },
+                { "text": "Sałata", "points": 20 },
+                { "text": "Groch", "points": 15 },
+                { "text": "Szpinak", "points": 10 }
+            ]
+        }
+    ]
+}
