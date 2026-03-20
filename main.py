@@ -239,7 +239,6 @@ class Game:
             for i in range(1, len(self.final_questions[self.question]) + 1):
                 if eval(f"self.keys[pg.K_{i}]"):
                     i = i - 1
-                    self.final_answers[self.question] = i
 
 
     def draw(self) -> None:
