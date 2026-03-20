@@ -28,7 +28,9 @@ class Game:
         self.mouse_pos: tuple[int, int] = pg.mouse.get_pos()
         self.font = pg.font.Font(self.files / "fonts" / "familiada.ttf", size=30)
         self.Xfont = pg.font.Font(self.files / "fonts" / "familiada.ttf", size=200)
-        self.asciifont= pg.font.Font(self.files / "fonts" / "JetBrainsMonoNerdFont-Regular.ttf", size = 14)
+        self.asciifont = pg.font.Font(
+            self.files / "fonts" / "JetBrainsMonoNerdFont-Regular.ttf", size=14
+        )
 
         self.running: bool = True
         self.state: str = "choose"
@@ -37,29 +39,35 @@ class Game:
 
         self.presets: list[dict] = self.load_presets()
 
-        self.teams: tuple[int, int] = (0, 0)
+        self.team_iks: tuple[int, int] = (0, 0)
         self.team: Literal[0] | Literal[1] = 0
 
         self.points: int = 0
+        self.team_points: tuple[int, int] = (0, 0)
 
-        self.intro = self.load_anim(self.files / "output.gif", 3)
+        self.intro = self.load_anim(self.files / "output.gif")
         self.current_delay = 0
         self.current_frame = 0
         self.current_time = 0
 
-        self.ascii_art: str = r"""
-             /$$$$$$$$ /$$$$$$  /$$      /$$ /$$$$$$ /$$       /$$$$$$  /$$$$$$  /$$$$$$$   /$$$$$$       
-            | $$_____//$$__  $$| $$$    /$$$|_  $$_/| $$      |_  $$_/ /$$__  $$| $$__  $$ /$$__  $$      
-            | $$     | $$  \ $$| $$$$  /$$$$  | $$  | $$        | $$  | $$  \ $$| $$  \ $$| $$  \ $$      
-            | $$$$$  | $$$$$$$$| $$ $$/$$ $$  | $$  | $$        | $$  | $$$$$$$$| $$  | $$| $$$$$$$$      
-            | $$__/  | $$__  $$| $$  $$$| $$  | $$  | $$        | $$  | $$__  $$| $$  | $$| $$__  $$      
-            | $$     | $$  | $$| $$\  $ | $$  | $$  | $$        | $$  | $$  | $$| $$  | $$| $$  | $$      
-            | $$     | $$  | $$| $$ \/  | $$ /$$$$$$| $$$$$$$$ /$$$$$$| $$  | $$| $$$$$$$/| $$  | $$      
-            |__/     |__/  |__/|__/     |__/|______/|________/|______/|__/  |__/|_______/ |__/  |__/      
-        """
-                                                                                              
-                                                                                              
+        self.intro_music = pg.mixer.Sound(self.files / "output.mp3")
+        self._intro_music = False
 
+        self.correct = pg.mixer.Sound(self.files / "dobra-odpowiedz-familiada.mp3")
+        self.bad = pg.mixer.Sound(self.files / "bledna-familiada.mp3")
+        self.jingle = pg.mixer.Sound(self.files / "przed-i-po-rundzie-familiada.mp3")
+        self.dzwonki = pg.mixer.Sound(self.files / "dzwonki-familiada.mp3")
+
+        self.ascii_art: str = r"""
+         /$$$$$$$$ /$$$$$$  /$$      /$$ /$$$$$$ /$$       /$$$$$$  /$$$$$$  /$$$$$$$   /$$$$$$       
+        | $$_____//$$__  $$| $$$    /$$$|_  $$_/| $$      |_  $$_/ /$$__  $$| $$__  $$ /$$__  $$      
+        | $$     | $$  \ $$| $$$$  /$$$$  | $$  | $$        | $$  | $$  \ $$| $$  \ $$| $$  \ $$      
+        | $$$$$  | $$$$$$$$| $$ $$/$$ $$  | $$  | $$        | $$  | $$$$$$$$| $$  | $$| $$$$$$$$      
+        | $$__/  | $$__  $$| $$  $$$| $$  | $$  | $$        | $$  | $$__  $$| $$  | $$| $$__  $$      
+        | $$     | $$  | $$| $$\  $ | $$  | $$  | $$        | $$  | $$  | $$| $$  | $$| $$  | $$      
+        | $$     | $$  | $$| $$ \/  | $$ /$$$$$$| $$$$$$$$ /$$$$$$| $$  | $$| $$$$$$$/| $$  | $$      
+        |__/     |__/  |__/|__/     |__/|______/|________/|______/|__/  |__/|_______/ |__/  |__/      
+        """
 
     def load_presets(self) -> list[dict]:
         presets: list[dict] = []
@@ -113,9 +121,7 @@ class Game:
                 (rect.center[0] - text.width // 2, rect.center[1] - text.height // 2),
             )
 
-    def load_anim(
-        self, path: pathlib.Path, scale_factor: int
-    ) -> list[tuple[pg.Surface, float]]:
+    def load_anim(self, path: pathlib.Path) -> list[tuple[pg.Surface, float]]:
 
         # Loading the animation as normal
         animation: list[tuple[pg.Surface, float]] = pg.image.load_animation(path)
@@ -125,16 +131,14 @@ class Game:
             frame, delay = pair
 
             # 2. Convert the frame and resize it
-            frame.convert_alpha() if frame.get_alpha() else frame.convert()
-            if scale_factor != 1:
-                frame = pg.transform.scale_by(frame, scale_factor)
+            frame = frame.convert()
+            frame = pg.transform.scale(frame, self.screen.size)
 
             # 3. Put everything together like nothing happened
             animation[i] = (frame, delay)
 
             # 4. Surgery completed successfully
-            return animation
-        return []
+        return animation
 
     def animate(self, dt: float) -> None:
         self.current_delay: float = self.intro[self.current_frame][1]
@@ -170,6 +174,7 @@ class Game:
                 if eval(f"self.keys[pg.K_{i}]"):
                     i = i - 1
                     if self.questions[self.question][i] == False:
+                        self.correct.play()
                         self.questions[self.question][i] = True
                         self.points += self.preset["questions"][self.question][
                             "answers"
@@ -177,32 +182,105 @@ class Game:
             # Dodawanie iksów
             if self.keys[pg.K_x]:
                 if self.team == 1:
-                    self.teams = (self.teams[0], self.teams[1] + 1)
+                    self.team_iks = (self.team_iks[0], self.team_iks[1] + 1)
                 else:
-                    self.teams = (self.teams[0] + 1, self.teams[1])
+                    self.team_iks = (self.team_iks[0] + 1, self.team_iks[1])
+                self.bad.play()
             # Zmienianie aktywnej drużyny
             if self.keys[pg.K_TAB]:
                 self.team = 1 if self.team == 0 else 0
+
+            if self.keys[pg.K_r]:
+                self.jingle.play()
+                self.question += 1
+                self.team_iks = (0, 0)
+
+            if self.keys[pg.K_LEFTBRACKET]:
+                self.team_points = (
+                    self.team_points[0] + self.points,
+                    self.team_points[1],
+                )
+                self.points = 0
+                self.dzwonki.play()
+
+            if self.keys[pg.K_RIGHTBRACKET]:
+                self.team_points = (
+                    self.team_points[0],
+                    self.team_points[1] + self.points,
+                )
+                self.points = 0
+                self.dzwonki.play()
+
+            if self.keys[pg.K_f] or self.keys[pg.K_j]:
+                self.state = "final"
+                self.final_questions = []
+                for i in range(len(self.preset["questions"]) - 1, -1, -1):
+                    if len(self.final_questions) < 5:
+                        self.final_questions.append(self.preset["questions"])
+                    else:
+                        break
+
+                self.final_answers = [None, None, None, None, None]
+                self.final_answers2 = [None, None, None, None, None]
+
+                if self.keys[pg.K_f]:
+                    self.final_team = 0
+                else:
+                    self.final_team = 1
+
+                self.question = 0
+                self.jingle.play()
+
+        if self.state == "final":
+            dalej = self.keys[pg.K_d]
+            blad = self.keys[pg.K_x]
+            bylo = self.keys[pg.K_b]
+
+            for i in range(1, len(self.final_questions[self.question]) + 1):
+                if eval(f"self.keys[pg.K_{i}]"):
+                    i = i - 1
+                    self.final_answers[self.question] = i
+
 
     def draw(self) -> None:
         self.screen.fill("black")
         if self.state == "choose":
             self.choose_preset()
 
-        if self.state == "intro":
+        if self.state == "intro" and not self.keys[pg.K_ESCAPE]:
             self.animate(self.dt)
+            if not self._intro_music:
+                self.intro_music.play()
+                self._intro_music = True
+        elif self.keys[pg.K_ESCAPE]:
+            self.intro_music.stop()
+            self.state = "ascii"
 
         if self.state == "ascii":
             rtext = self.asciifont.render(self.ascii_art, True, "yellow")
-            self.screen.blit(rtext)
+            rtext = pg.transform.scale2x(rtext)
+            self.screen.blit(
+                rtext,
+                (
+                    self.screen.width // 2 - rtext.width // 2,
+                    self.screen.height // 2 - rtext.height // 2,
+                ),
+            )
 
             if self.keys[pg.K_RETURN]:
                 self.state = "normal"
 
         if self.state == "normal":
             size = self.screen.size
+            suma = self.font.render(f"SUMA: {self.points}", True, "yellow")
+            size = (size[0], size[1] - suma.height - 20)
             width = size[0]
             iks_width = width / 12
+
+            pointsl, pointsr = self.team_points
+
+            pointsl = self.font.render(f"{pointsl}", True, "yellow")
+            pointsr = self.font.render(f"{pointsr}", True, "yellow")
 
             if self.team == 1:
                 # Pionowa linia po prawej
@@ -245,7 +323,7 @@ class Game:
             iks_width_halfy = (size[1] // 3 - rtext.height) // 2
 
             # Iksy po lewej
-            for i in range(self.teams[0]):
+            for i in range(self.team_iks[0]):
                 self.screen.blit(
                     rtext,
                     (
@@ -256,7 +334,7 @@ class Game:
                 )
 
             # Iksy po prawej
-            for i in range(self.teams[1]):
+            for i in range(self.team_iks[1]):
                 self.screen.blit(
                     rtext,
                     (
@@ -293,6 +371,22 @@ class Game:
                         (i + 1) * half_integer + i * (rtext.height + half_integer),
                     ),
                 )
+
+            self.screen.blit(
+                suma,
+                (
+                    self.screen.width // 2 - suma.width // 2,
+                    self.screen.height - 10 - suma.height,
+                ),
+            )
+            self.screen.blit(
+                pointsl, (iks_width + 20, self.screen.height - pointsl.height - 20)
+            )
+
+            self.screen.blit(
+                pointsr,
+                (width - iks_width - 20, self.screen.height - pointsl.height - 20),
+            )
 
         pg.display.flip()
 
